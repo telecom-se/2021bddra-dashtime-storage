@@ -1,25 +1,22 @@
 package telecom;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashMap;
 
 import Types.*;
+
 public class Collections {
 
-	private ArrayList<Series> collection;
+	private HashMap<String, Series> collection;
 
-	public ArrayList<Series> getCollection() {
-		return collection;
-	}
-
-	public void setCollection(ArrayList<Series> collection) {
-		this.collection = collection;
-	}
-	
-	public void addElement(Series serie) {
-		collection.add(serie);
-	}
-	
 	public Collections() {
-		collection = new ArrayList();
+		this.collection = new HashMap<String, Series>();
+	}
+
+	public void addSerie(String nom, Series serie) {
+		this.collection.put(nom, serie);
+	}
+	
+	public Series getSerie(String nom) {
+		return this.collection.get(nom);
 	}
 }
