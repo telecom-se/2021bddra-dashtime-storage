@@ -4,17 +4,22 @@ import java.util.Date;
 
 public class Timestamp {
 
-	private long timestamp;
+	private Long timestamp;
+
+	public Timestamp() {
+		this.timestamp = new Date().getTime();
+	}
+
+	public Timestamp(Long time) {
+		this.timestamp = time;
+	}
 
 	public long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
-	
-	public Timestamp() {
-		timestamp = new Date().getTime();
-	}
+
 }
