@@ -4,4 +4,11 @@
   <artifactId>telecom</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>AdvancedDB</name>
+  <dependencies>
+	  <dependency>
+	      <groupId>com.opencsv</groupId>
+	      <artifactId>opencsv</artifactId>
+	      <version>5.3</version>
+	  </dependency>
+  </dependencies>
 </project>
