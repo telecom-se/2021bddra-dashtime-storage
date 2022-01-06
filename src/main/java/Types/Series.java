@@ -32,4 +32,27 @@ public class Series {
 	public void removeData(Data data) {
 		this.dataList.remove(data);
 	}
+
+	@Override
+	public String toString() {
+		return "Series [dataList=" + dataList + "]";
+	}
+
+	public void deltaCompression() {
+		Double previousValue = 0.0;
+
+		for (Data d : this.dataList) {
+			d.setValue(d.getValue() - previousValue);
+			previousValue += d.getValue();
+		}
+	}
+	
+	public void deltaDecompression() {
+		Double previousValue = 0.0;
+		
+		for (Data d : this.dataList) {
+			d.setValue(d.getValue() + previousValue);
+			previousValue = d.getValue();
+		}
+	}
 }

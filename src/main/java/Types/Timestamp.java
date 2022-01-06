@@ -14,12 +14,17 @@ public class Timestamp {
 		this.timestamp = time;
 	}
 
-	public long getTimestamp() {
-		return timestamp;
+	public long getValue() {
+		return this.timestamp;
 	}
 
-	public void setTimestamp(Long timestamp) {
+	public void setValue(Long timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	@Override
+	public String toString() {
+		return "Timestamp [timestamp=" + timestamp + "]";
 	}
 
 }
