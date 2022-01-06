@@ -3,12 +3,7 @@ package Types;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Timestamp implements Serializable{
-
-	@Override
-	public String toString() {
-		return "Timestamp [timestamp=" + timestamp + "]";
-	}
+public class Timestamp implements Serializable {
 
 	/**
 	 * 
@@ -26,12 +21,12 @@ public class Timestamp implements Serializable{
 
 	public long getValue() {
 		return this.timestamp;
-  }
-	
+	}
+
 	public Timestamp(String time) {
 		this.timestamp = Long.parseLong(time);
 	}
-	
+
 	public void setValue(Long timestamp) {
 		this.timestamp = timestamp;
 	}

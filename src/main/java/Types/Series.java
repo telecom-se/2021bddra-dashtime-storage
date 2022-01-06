@@ -8,11 +8,6 @@ import java.util.LinkedList;
 // La db stocke des collections de séries
 public class Series implements Serializable {
 
-	@Override
-	public String toString() {
-		return "Series [dataList=" + dataList + "]";
-	}
-
 	/**
 	 * 
 	 */
@@ -56,10 +51,10 @@ public class Series implements Serializable {
 			previousValue += d.getValue();
 		}
 	}
-	
+
 	public void deltaDecompression() {
 		Double previousValue = 0.0;
-		
+
 		for (Data d : this.dataList) {
 			d.setValue(d.getValue() + previousValue);
 			previousValue = d.getValue();
