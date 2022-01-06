@@ -42,4 +42,6 @@ public class Series implements Serializable {
 	public void removeData(Data data) {
 		this.dataList.remove(data);
 	}
+	
+	
 }

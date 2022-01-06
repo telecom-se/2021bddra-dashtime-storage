@@ -24,7 +24,12 @@ public class Data implements Serializable {
 		this.timeStamp = timeStamp;
 		this.value = value;
 	}
-
+	
+	public Data(String timeStamp, String value) {
+		this.timeStamp = new Timestamp(timeStamp);
+		this.value = Double.parseDouble(value);
+	}
+	
 	public Timestamp getTimeStamp() {
 		return timeStamp;
 	}
