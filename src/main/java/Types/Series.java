@@ -1,12 +1,22 @@
 package Types;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 
 // Une série contient une date, une valeur et un nom
 // La db stocke des collections de séries
-public class Series {
+public class Series implements Serializable {
 
+	@Override
+	public String toString() {
+		return "Series [dataList=" + dataList + "]";
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8962558508769405528L;
 	private LinkedList<Data> dataList;
 
 	public Series() {
