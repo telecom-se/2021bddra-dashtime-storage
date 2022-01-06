@@ -1,7 +1,18 @@
 package Types;
 
-public class Data {
+import java.io.Serializable;
 
+public class Data implements Serializable {
+
+	@Override
+	public String toString() {
+		return "Data [timeStamp=" + timeStamp + ", value=" + value + "]";
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8309456898207869492L;
 	private Timestamp timeStamp;
 	private Double value;
 

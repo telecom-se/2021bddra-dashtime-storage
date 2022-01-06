@@ -1,11 +1,14 @@
 package telecom;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import Types.*;
 
-public class Collections {
+public class Collections implements Serializable {
 
+	private static final long serialVersionUID = 2053443173473217147L;
+	
 	private HashMap<String, Series> collection;
 
 	public Collections() {
@@ -19,4 +22,12 @@ public class Collections {
 	public Series getSerie(String nom) {
 		return this.collection.get(nom);
 	}
+
+	@Override
+	public String toString() {
+		return "Collections [collection=" + collection + "]";
+	}
+	
+	
+
 }
