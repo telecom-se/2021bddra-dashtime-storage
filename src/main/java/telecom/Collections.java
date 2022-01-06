@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Set;
 
 import Types.*;
 
@@ -25,9 +26,21 @@ public class Collections implements Serializable {
 	public void addSerie(String nom, Series serie) {
 		this.collection.put(nom, serie);
 	}
-	
+
 	public Series getSerie(String nom) {
 		return this.collection.get(nom);
+	}
+
+	public Set<String> getKeys() {
+		return this.collection.keySet();
+	}
+
+	public void deltaCompression() {
+		this.collection.forEach((titre, serie) -> serie.deltaCompression());
+	}
+
+	public void deltaDecompression() {
+		this.collection.forEach((titre, serie) -> serie.deltaDecompression());
 	}
 
 	@Override
@@ -48,7 +61,7 @@ public class Collections implements Serializable {
 			e1.printStackTrace();
 		}
 				
-		 // désérialization de l'objet
+		 // dÃ©sÃ©rialization de l'objet
 		Collections m = null;
 		try {
 			m = (Collections)ois.readObject();

@@ -23,17 +23,22 @@ public class Timestamp implements Serializable{
 	public Timestamp(Long time) {
 		this.timestamp = time;
 	}
+
+	public long getValue() {
+		return this.timestamp;
+  }
 	
 	public Timestamp(String time) {
 		this.timestamp = Long.parseLong(time);
 	}
 	
-	public long getTimestamp() {
-		return timestamp;
+	public void setValue(Long timestamp) {
+		this.timestamp = timestamp;
 	}
 
-	public void setTimestamp(Long timestamp) {
-		this.timestamp = timestamp;
+	@Override
+	public String toString() {
+		return "Timestamp [timestamp=" + timestamp + "]";
 	}
 
 }

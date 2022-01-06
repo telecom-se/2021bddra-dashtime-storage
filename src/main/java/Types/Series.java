@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 
-// Une série contient une date, une valeur et un nom
-// La db stocke des collections de séries
+// Une sÃ©rie contient une date, une valeur et un nom
+// La db stocke des collections de sÃ©ries
 public class Series implements Serializable {
 
 	@Override
@@ -42,6 +42,28 @@ public class Series implements Serializable {
 	public void removeData(Data data) {
 		this.dataList.remove(data);
 	}
+
+	@Override
+	public String toString() {
+		return "Series [dataList=" + dataList + "]";
+	}
+
+	public void deltaCompression() {
+		Double previousValue = 0.0;
+
+		for (Data d : this.dataList) {
+			d.setValue(d.getValue() - previousValue);
+			previousValue += d.getValue();
+		}
+	}
 	
-	
+	public void deltaDecompression() {
+		Double previousValue = 0.0;
+		
+		for (Data d : this.dataList) {
+			d.setValue(d.getValue() + previousValue);
+			previousValue = d.getValue();
+		}
+	}
+
 }
