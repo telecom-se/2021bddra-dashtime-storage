@@ -6,16 +6,25 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import LoadDatabase.DataGenerator;
 import Types.*;
 import Utils.Init;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		Collections collec = Init.initialize();
-
-		System.out.println(collec);
 
 		Set<String> keys = collec.getKeys();
 		for (String k : keys) {
@@ -44,5 +53,15 @@ public class Main {
 			}
 			
 		}
+
+		System.out.println(collec);
+		
+		Collections collec2 = new Collections();
+		
+		//Génère un fichier de 500 lignes
+		DataGenerator dg = new DataGenerator(500);
+		
+		//Remplit collec2
+		dg.ReadData(collec2,"500");
 	}
 }

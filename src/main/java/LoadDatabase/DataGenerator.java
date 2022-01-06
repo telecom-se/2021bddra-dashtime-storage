@@ -2,22 +2,33 @@ package LoadDatabase;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-
+import Types.Data;
+import Types.Series;
+import telecom.Collections;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
+import com.opencsv.CSVReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /* Cette classe génère des données afin de peupler la base
  * Les données sont stockées dans un fichier csv*/
 
 public class DataGenerator {
 	
+	//Constructeur pour writer
 	public DataGenerator(int n) throws IOException {
 		
-		List<String[]> data = createCsvDataSimple(n);
+		List<String[]> data = createCsvDataSample(n);
 		CSVWriter writer = null;
 		try{
 			String file = n+".csv";
@@ -30,32 +41,67 @@ public class DataGenerator {
 		}
 	}
 	
-	private static List<String[]> createCsvDataSimple(int n) {
+	//Constructeur pour reader
+	public DataGenerator() {
+		
+	}
+	
+	private static List<String[]> createCsvDataSample(int n) {
         
 		// Generate data
-		//String[] header = {"name", "timestamp", "temperature"};
+		List<String[]> list = new ArrayList<String[]>();        
+		Random rand = new Random();
         String str = null;
-        Random rand = new Random();
-        List<String[]> list = new ArrayList<String[]>();        
+        Date d = null;
         String idCapt;
         String temp;
         String ts;
-        Date d = null;
-        long unixtime;
+        
+        Long startTs = Timestamp.valueOf("1970-01-01 00:00:00").getTime(); //1 janvier 1970 minuit
+        Long endTs = Timestamp.valueOf("2025-01-01 00:00:00").getTime(); //1 lanvier 2025 minuit
+        Long diff = endTs - startTs + 1;
+        
         for (int i=0; i<n;i++){
-   
+        	//Id & value generated
         	idCapt = String.valueOf(rand.nextInt(64));		//Génère jusqu'à 64 id
         	temp = String.valueOf(rand.nextDouble()*35); 	//Génère jusqu'à 35°
-        	
-        	d = new Date((long) (1293861599+rand.nextDouble()*60*60*24*365));
-        	
-        	ts = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(d.getTime());
-        	
+        	//Timestamp
+        	ts = new SimpleDateFormat("yyyyMMddhhmmss").format(new Timestamp(startTs + (long)(Math.random()*diff)));
+        	//Parsing
         	str = idCapt +","+temp+","+ts;
-        	list.add(str.split(","));
-	
+        	list.add(str.split(","));	
 		}
-        
         return list;
     }
+	
+	// Fonction permettant la lecture et le remplissage de la base à partir des données générées ci-dessus
+	public void ReadData (Collections collec,String path) {
+		//Création d'une collection
+		//Collections collec = new Collections();
+		String PATH = ".\\data\\" + path + ".csv";
+		//Remplissage de la collection
+		try {
+            Reader reader = Files.newBufferedReader(Paths.get(PATH));
+            CSVReader csvReader = new CSVReader(reader);      
+			String [] buffer;
+			
+			while((buffer = csvReader.readNext()) != null) {				
+				//[0] : id, [1] : value, [2] : ts
+				Data data = new Data(buffer[2],buffer[1]);
+				if(collec.getSerie(buffer[0]) != null)
+				{
+					//Nous ajoutons un membre à la série correspondante
+					collec.getSerie(buffer[0]).addData(data);
+				}else {
+					//Nous ajoutons une nouvelle série
+					Collection<Data> d = Arrays.asList(data);
+					collec.addSerie(buffer[0], new Series(d));					
+				}								
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		} catch (CsvValidationException e) {
+			e.printStackTrace();
+		}
+	}
 }
