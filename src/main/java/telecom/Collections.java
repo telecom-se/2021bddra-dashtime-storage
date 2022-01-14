@@ -22,6 +22,12 @@ public class Collections implements Serializable {
 		this.collection = new HashMap<String, Series>();
 	}
 
+	//Create Collections with loading DB
+	public Collections(String dirToLoad) {
+		this.collection = new HashMap<String, Series>();
+		this.LoadDataFromDir(dirToLoad);
+	}
+	
 	public void addSerie(String nom, Series serie) {
 		this.collection.put(nom, serie);
 	}
@@ -62,9 +68,24 @@ public class Collections implements Serializable {
 		
 	}
 	
+	public void LoadDataFromDir(String directory) {
+		File dir = new File(directory);
+		File[] listFiles = dir.listFiles();
+		
+		for(int i=0; i<listFiles.length; i++) {
+			this.LoadData(listFiles[i].toString());
+		}
+	}
+	
+	public void sortCollections() {
+		Set<String> keys = this.getKeys();
+		for (String k : keys) {
+			this.getSerie(k).sortSeries();
+		}
+	}
+	
 	public void SaveData(String filename) {
-		File fichier =  new File(filename) ;
-
+		File fichier =  new File("db\\" + filename);
 
 		ObjectOutputStream oos = null;
 		try {

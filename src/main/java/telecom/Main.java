@@ -12,11 +12,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import LoadDatabase.DataGenerator;
 import Types.*;
+<<<<<<< Updated upstream
+=======
+//import Utils.Init;
+>>>>>>> Stashed changes
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 
+<<<<<<< Updated upstream
 		/*
 		Collections collec = new Collections();
 
@@ -30,12 +35,56 @@ public class Main {
 		*/
 		
 		Collections collec2 = new Collections();
+=======
+//		Collections collec = Init.initialize();
+//
+//		Set<String> keys = collec.getKeys();
+//		for (String k : keys) {
+//			for (Data d : collec.getSerie(k).getData()) {
+//				System.out.println(d.getValue());
+//			}
+//			
+//		}
+//		
+//		System.out.println("==== Encryption ====");
+//		collec.deltaCompression();
+//		
+//		for (String k : keys) {
+//			for (Data d : collec.getSerie(k).getData()) {
+//				System.out.println(d.getValue());
+//			}
+//			
+//		}
+//		
+//		System.out.println("==== Desencryption ====");
+//		collec.deltaDecompression();
+//		
+//		for (String k : keys) {
+//			for (Data d : collec.getSerie(k).getData()) {
+//				System.out.println(d.getValue());
+//			}
+//			
+//		}
+//
+//		System.out.println(collec);
+>>>>>>> Stashed changes
 		
-		//Génère un fichier de 500 lignes
-		DataGenerator dg = new DataGenerator(500);
+		/* // Creating and loading data
+		Collections collec = new Collections();	
+		DataGenerator dg = new DataGenerator(300);
+		dg.ReadData(collec, "300");
+		collec.SaveData("300");
+		*/
 		
+<<<<<<< Updated upstream
 		//Remplit collec2
 		dg.ReadData(collec2,"500");
 		
+=======
+		Collections collec = new Collections("db");
+		collec.sortCollections();
+	
+		System.out.println("done");
+>>>>>>> Stashed changes
 	}
 }
