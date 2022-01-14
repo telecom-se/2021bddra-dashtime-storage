@@ -2,7 +2,9 @@ package telecom;
 
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -23,7 +25,7 @@ import Utils.Init;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-
+/*
 		Collections collec = Init.initialize();
 
 		Set<String> keys = collec.getKeys();
@@ -63,5 +65,16 @@ public class Main {
 		
 		//Remplit collec2
 		dg.ReadData(collec2,"500");
+		*/
+		System.out.println(new Date());
+		long timestamp = new Date().getTime();
+		System.out.println(timestamp);
+		Date d = new Date();
+		d.setTime(timestamp);
+		System.out.println(d);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		System.out.println(cal.get(Calendar.YEAR));
 	}
+		
 }

@@ -16,11 +16,21 @@ import Types.*;
 public class Collections implements Serializable {
 
 	private static final long serialVersionUID = 2053443173473217147L;
-	
+
 	private HashMap<String, Series> collection;
 
 	public Collections() {
 		this.collection = new HashMap<String, Series>();
+	}
+
+	public void addElement(String nom, Data data) {
+		Set<String> keys = this.collection.keySet();
+
+		if (keys.contains(nom)) {
+			this.getSerie(nom).addData(data);
+		} else {
+			this.addSerie(nom, new Series(Set.of(data)));
+		}
 	}
 
 	public void addSerie(String nom, Series serie) {
@@ -47,11 +57,11 @@ public class Collections implements Serializable {
 	public String toString() {
 		return "Collections [collection=" + collection + "]";
 	}
-	
-	public void LoadData(String filename) {
-		File fichiers =  new File(filename) ;
 
-		 // ouverture d'un flux sur un fichier
+	public void LoadData(String filename) {
+		File fichiers = new File(filename);
+
+		// ouverture d'un flux sur un fichier
 		ObjectInputStream ois = null;
 		try {
 			ois = new ObjectInputStream(new FileInputStream(fichiers));
@@ -60,24 +70,24 @@ public class Collections implements Serializable {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-				
-		 // désérialization de l'objet
+
+		// deserialization de l'objet
 		Collections m = null;
 		try {
-			m = (Collections)ois.readObject();
+			m = (Collections) ois.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(m) ;
-		this.collection=m.collection;
-		
-	}
-	
-	public void SaveData(String filename) {
-		File fichier =  new File(filename) ;
+		System.out.println(m);
+		m.deltaDecompression();
+		this.collection = m.collection;
 
+	}
+
+	public void SaveData(String filename) {
+		File fichier = new File(filename);
 
 		ObjectOutputStream oos = null;
 		try {
@@ -89,21 +99,14 @@ public class Collections implements Serializable {
 			e1.printStackTrace();
 		}
 
-		
-
-
 		try {
-			oos.writeObject(this) ;
+			this.deltaCompression();
+			oos.writeObject(this);
 		} catch (IOException e) {
 
 			e.printStackTrace();
 		}
 
-		
-		
-		
-		
-		
 	}
 
 }

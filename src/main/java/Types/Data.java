@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 public class Data implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8309456898207869492L;
 	private Timestamp timeStamp;
 	private Double value;
