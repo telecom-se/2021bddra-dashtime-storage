@@ -40,6 +40,10 @@ public class Collections implements Serializable {
 	public Series getSerie(String nom) {
 		return this.collection.get(nom);
 	}
+	
+	public HashMap<String, Series> getAllSeries() {
+		return this.collection;
+	}
 
 	public Set<String> getKeys() {
 		return this.collection.keySet();
