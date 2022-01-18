@@ -1,11 +1,12 @@
 # 2021bddra-equipe1-storage
 
 ## Membres de l'équipe
-Grégoire Biron
-Ruben Feliciano
-Thomas Gagnaire
-Tom-Pierre Brégnac
-
+Grégoire Biron  
+Ruben Feliciano  
+Thomas Gagnaire  
+Tom-Pierre Brégnac  
+Eva Luvisutto  
+  
 ## Tâches
 Création du système de stockage d'une base de données
 
