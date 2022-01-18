@@ -8,10 +8,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import Types.Collections;
 import Types.Data;
 import Types.Series;
-import telecom.Collections;
+import telecom.Database;
+
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import com.opencsv.CSVReader;
@@ -75,7 +79,7 @@ public class DataGenerator {
     }
 	
 	// Fonction permettant la lecture et le remplissage de la base à partir des données générées ci-dessus
-	public void ReadData (Collections collec,String path) {
+	public void ReadData (Database db,String path) throws NumberFormatException, ParseException {
 		//Création d'une collection
 		//Collections collec = new Collections();
 		String PATH = ".\\data\\" + path + ".csv";
@@ -85,18 +89,14 @@ public class DataGenerator {
             CSVReader csvReader = new CSVReader(reader);      
 			String [] buffer;
 			
+			int i = 0;
 			while((buffer = csvReader.readNext()) != null) {				
 				//[0] : id, [1] : value, [2] : ts
-				Data data = new Data(buffer[2],buffer[1]);
-				if(collec.getSerie(buffer[0]) != null)
-				{
-					//Nous ajoutons un membre à la série correspondante
-					collec.getSerie(buffer[0]).addData(data);
-				}else {
-					//Nous ajoutons une nouvelle série
-					Collection<Data> d = Arrays.asList(data);
-					collec.addSerie(buffer[0], new Series(d));					
-				}								
+				Data data = new Data(new Types.Timestamp(new SimpleDateFormat("yyyyMMddhhmmss").parse(buffer[2]).getTime()), Double.parseDouble(buffer[1]));
+				db.addElement(buffer[0], data);
+				
+				i++;
+				System.out.println("READ DATA: " + i);
 			}
 		}catch(IOException e) {
 			e.printStackTrace();

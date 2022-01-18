@@ -3,7 +3,7 @@ package Types;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Timestamp implements Serializable {
+public class Timestamp implements Serializable, Comparable<Timestamp> {
 
 	/**
 	 * 
@@ -34,6 +34,11 @@ public class Timestamp implements Serializable {
 	@Override
 	public String toString() {
 		return "Timestamp [timestamp=" + timestamp + "]";
+	}
+
+	@Override
+	public int compareTo(Timestamp o) {
+		return this.timestamp.compareTo(o.timestamp);
 	}
 
 }
