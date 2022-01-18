@@ -19,17 +19,32 @@ import Types.Collections;
 import Types.Data;
 import Types.Series;
 
+/**
+ * Classe principale de notre systeme de stockage. Database est un ensemble de
+ * Collection. Chaque Collection regroupe les Datas de tous les capteur pendant
+ * un intervalle de 5 ans (cet intervalle est a adapter au volume de donnees et
+ * au nombre de capteurs a gerer ; dans notre cas, il a ete decide
+ * arbitrairement car nous n'avons pas de vraies donnees a gerer). Le but de
+ * cette fragmentation est d'ameliorer le temps des recherches sur de grands
+ * volumes de donnees.
+ */
 public class Database {
-
+	// Dossier contenant les sauvegardes de nos Collections
 	private final String directory = "./data/db_saves/";
 
-	private SortedMap<Integer, Collections> database;
+	private SortedMap<Integer, Collections> database; // L'ensemble de nos Collections
 
 	public Database() {
 		this.database = new TreeMap<Integer, Collections>();
 	}
 
-	// Ajoute un element Data dans la Collections et la Serie appropries
+	/**
+	 * Permet d'ajouter un element Data dans la BDD. Cree automatiquement les
+	 * Collections et Series adaptees si elles n'existent pas deja.
+	 * 
+	 * @param nomSerie Le nom du capteur dont vient la mesure
+	 * @param data     L'element a ajouter
+	 */
 	public void addElement(String nomSerie, Data data) {
 		Date elementDate = new Date();
 		elementDate.setTime(data.getTimeStamp().getValue());
@@ -69,7 +84,12 @@ public class Database {
 		}
 	}
 
-	// Retourne toutes les donnees d'un capteur dont on donne l'id
+	/**
+	 * Permet de recuperer toutes les mesures d'un capteur.
+	 * 
+	 * @param nomSerie Le nom du capteur
+	 * @return La liste de toutes les mesures (Datas) du capteur
+	 */
 	public ArrayList<Data> getCompleteSerie(String nomSerie) {
 		ArrayList<Data> result = new ArrayList<Data>();
 		Set<Integer> keys = this.database.keySet();
@@ -84,7 +104,13 @@ public class Database {
 		return result;
 	}
 
-	// Retourne toutes les mesures entre deux dates donnees
+	/**
+	 * Permet de recuperer les mesures de tous les capteurs entre deux dates.
+	 * 
+	 * @param start  La date de debut de la recherche
+	 * @param finish La date de fin de la recherche
+	 * @return La liste de toutes les mesures (Datas) entre les deux dates
+	 */
 	public ArrayList<Data> getDataBetween(Date start, Date finish) {
 		ArrayList<Data> result = new ArrayList<Data>();
 		Set<Integer> keys = this.database.keySet();
@@ -98,7 +124,7 @@ public class Database {
 		for (Integer k : keys) {
 			if (k + 5 > beginning && end >= k) {
 				// Si l'intervalle de temps correspond à la requete
-				HashMap<String, Series> series = this.database.get(k).getAllSeries();
+				HashMap<String, Series> series = this.database.get(k).getCollection();
 				Set<String> keys2 = series.keySet();
 				for (String l : keys2) {
 					Series s = series.get(l);
@@ -122,7 +148,15 @@ public class Database {
 		return result;
 	}
 
-	// Retourne toutes les mesures d'un capteur dont on donne l'id entre deux dates
+	/**
+	 * Permet de recuperer les mesures d'un capteur entre deux dates.
+	 * 
+	 * @param nom    Le nom du capteur
+	 * @param start  La date de debut de la recherche
+	 * @param finish La date de fin de la recherche
+	 * @return La liste de toutes les mesures (Datas) d'un capteur entre les deux
+	 *         dates
+	 */
 	public ArrayList<Data> getOneSerieBetween(String nom, Date start, Date finish) {
 		ArrayList<Data> result = new ArrayList<Data>();
 		Set<Integer> keys = this.database.keySet();
@@ -136,7 +170,7 @@ public class Database {
 		for (Integer k : keys) {
 			if (k + 5 > beginning && end >= k) {
 				// Si l'intervalle de temps correspond à la requete
-				HashMap<String, Series> series = this.database.get(k).getAllSeries();
+				HashMap<String, Series> series = this.database.get(k).getCollection();
 				Set<String> keys2 = series.keySet();
 
 				if (keys2.contains(nom)) {
@@ -162,7 +196,11 @@ public class Database {
 		return result;
 	}
 
-	// Recupere une collection depuis son fichier dans ./data/db_saves
+	/**
+	 * Permet de restaurer les donnees d'une Collection dans la database.
+	 * 
+	 * @param filename Le chemin d'acces au fichier de sauvegarde
+	 */
 	private void LoadData(String filename) {
 		File fichiers = new File(filename);
 		String nomfichier = filename.split("\\\\")[3];
@@ -193,7 +231,9 @@ public class Database {
 
 	}
 
-	// Liste toutes les Collections dans /data/db_saves et les deserialize
+	/**
+	 * Permet de restaurer toutes les Collections sauvegardees.
+	 */
 	public void LoadDB() {
 		File dir = new File(this.directory);
 		File[] listFiles = dir.listFiles();
@@ -205,7 +245,9 @@ public class Database {
 
 	}
 
-	// Sauvegarde toutes les Collections dans /data/db_saves
+	/**
+	 * Permet de sauvegarder toutes les Collesctions de la Database.
+	 */
 	public void saveDB() {
 		Set<Integer> keys = this.database.keySet();
 
@@ -215,11 +257,14 @@ public class Database {
 		}
 	}
 
-	// Donne le nombre total d'elements de la bdd
+	/**
+	 * Permet d'obtenir le nombre de mesures (Datas) dans la Databes.
+	 * 
+	 * @return Le nombre d'elements Data dans la Database
+	 */
 	public long sizeTotal() {
 		long taille = 0;
 
-		ArrayList<Data> result = new ArrayList<Data>();
 		Set<Integer> keys = this.database.keySet();
 
 		for (Integer k : keys) {
@@ -234,11 +279,13 @@ public class Database {
 		return taille;
 	}
 
-	// Initialise la bdd avec des donnees generees aleatoirement
+	/**
+	 * Initialise la Database avec des mesures generees aleatoirement.
+	 */
 	public void randomInit() {
 		try {
-			DataGenerator dg = new DataGenerator(500);
-			dg.ReadData(this, "500");
+			DataGenerator dg = new DataGenerator(500); // Genere 500 mesures aleatoires
+			DataGenerator.ReadData(this, "500");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

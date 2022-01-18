@@ -2,11 +2,15 @@ package Types;
 
 import java.io.Serializable;
 
+/**
+ * Data est l'element de base de notre systeme de stockage. Il contient un
+ * Timestamp (date de la mesure) et une mesure
+ */
 public class Data implements Serializable, Comparable<Data> {
 
 	private static final long serialVersionUID = -8309456898207869492L;
-	private Timestamp timeStamp;
-	private Double value;
+	private Timestamp timeStamp; // Date de la mesure
+	private Double value; // Mesure
 
 	public Data() {
 
