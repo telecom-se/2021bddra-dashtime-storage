@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,19 +14,22 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import LoadDatabase.DataGenerator;
 import Types.Collections;
 import Types.Data;
 import Types.Series;
 
 public class Database {
-	private SortedMap<Integer, Collections> database;
 
 	private final String directory = "./data/db_saves/";
+
+	private SortedMap<Integer, Collections> database;
 
 	public Database() {
 		this.database = new TreeMap<Integer, Collections>();
 	}
 
+	// Ajoute un element Data dans la Collections et la Serie appropries
 	public void addElement(String nomSerie, Data data) {
 		Date elementDate = new Date();
 		elementDate.setTime(data.getTimeStamp().getValue());
@@ -65,6 +69,7 @@ public class Database {
 		}
 	}
 
+	// Retourne toutes les donnees d'un capteur dont on donne l'id
 	public ArrayList<Data> getCompleteSerie(String nomSerie) {
 		ArrayList<Data> result = new ArrayList<Data>();
 		Set<Integer> keys = this.database.keySet();
@@ -79,6 +84,7 @@ public class Database {
 		return result;
 	}
 
+	// Retourne toutes les mesures entre deux dates donnees
 	public ArrayList<Data> getDataBetween(Date start, Date finish) {
 		ArrayList<Data> result = new ArrayList<Data>();
 		Set<Integer> keys = this.database.keySet();
@@ -116,6 +122,7 @@ public class Database {
 		return result;
 	}
 
+	// Retourne toutes les mesures d'un capteur dont on donne l'id entre deux dates
 	public ArrayList<Data> getOneSerieBetween(String nom, Date start, Date finish) {
 		ArrayList<Data> result = new ArrayList<Data>();
 		Set<Integer> keys = this.database.keySet();
@@ -155,11 +162,12 @@ public class Database {
 		return result;
 	}
 
-	public void LoadData(String filename) {
+	// Recupere une collection depuis son fichier dans ./data/db_saves
+	private void LoadData(String filename) {
 		File fichiers = new File(filename);
 		String nomfichier = filename.split("\\\\")[3];
 		System.out.println(nomfichier);
-		
+
 		// ouverture d'un flux sur un fichier
 		ObjectInputStream ois = null;
 		try {
@@ -185,6 +193,7 @@ public class Database {
 
 	}
 
+	// Liste toutes les Collections dans /data/db_saves et les deserialize
 	public void LoadDB() {
 		File dir = new File(this.directory);
 		File[] listFiles = dir.listFiles();
@@ -196,6 +205,7 @@ public class Database {
 
 	}
 
+	// Sauvegarde toutes les Collections dans /data/db_saves
 	public void saveDB() {
 		Set<Integer> keys = this.database.keySet();
 
@@ -205,7 +215,8 @@ public class Database {
 		}
 	}
 
-	public long totalSize() {
+	// Donne le nombre total d'elements de la bdd
+	public long sizeTotal() {
 		long taille = 0;
 
 		ArrayList<Data> result = new ArrayList<Data>();
@@ -221,5 +232,22 @@ public class Database {
 		}
 
 		return taille;
+	}
+
+	// Initialise la bdd avec des donnees generees aleatoirement
+	public void randomInit() {
+		try {
+			DataGenerator dg = new DataGenerator(500);
+			dg.ReadData(this, "500");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

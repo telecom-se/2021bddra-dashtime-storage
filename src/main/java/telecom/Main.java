@@ -76,7 +76,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		System.out.println(db.totalSize());
+		System.out.println(db.sizeTotal());
 		
 		db.saveDB();
 		
@@ -85,7 +85,7 @@ public class Main {
 		Database db2 = new Database();
 		
 		db2.LoadDB();
-		System.out.println("db2 size: " + db2.totalSize());
+		System.out.println("db2 size: " + db2.sizeTotal());
 		
 		/*
 		System.out.println(new Date());
