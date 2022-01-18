@@ -1,6 +1,7 @@
 package telecom;
 
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -57,15 +58,36 @@ public class Main {
 		}
 
 		System.out.println(collec);
-		
+		*/
 		Collections collec2 = new Collections();
 		
 		//Génère un fichier de 500 lignes
 		DataGenerator dg = new DataGenerator(500);
+		Database db = new Database();
 		
 		//Remplit collec2
-		dg.ReadData(collec2,"500");
-		*/
+		try {
+			dg.ReadData(db,"500");
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(db.totalSize());
+		
+		db.saveDB();
+		
+		System.out.println("========= LOAD DB ==========");
+		
+		Database db2 = new Database();
+		
+		db2.LoadDB();
+		System.out.println("db2 size: " + db2.totalSize());
+		
+		/*
 		System.out.println(new Date());
 		long timestamp = new Date().getTime();
 		System.out.println(timestamp);
@@ -75,6 +97,9 @@ public class Main {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		System.out.println(cal.get(Calendar.YEAR));
+		*/
+		
+		
 	}
 		
 }

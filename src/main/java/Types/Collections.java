@@ -1,4 +1,4 @@
-package telecom;
+package Types;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,8 +10,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
-
-import Types.*;
 
 public class Collections implements Serializable {
 
@@ -27,6 +25,7 @@ public class Collections implements Serializable {
 		Set<String> keys = this.collection.keySet();
 
 		if (keys.contains(nom)) {
+			System.out.println("Serie existe");
 			this.getSerie(nom).addData(data);
 		} else {
 			this.addSerie(nom, new Series(Set.of(data)));
