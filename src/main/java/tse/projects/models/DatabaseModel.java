@@ -5,9 +5,9 @@ import tse.projects.utils.Condition;
 import java.util.List;
 
 
-public interface DatabaseModel {
+public class DatabaseModel {
 
-    public default Boolean passConditions(List<Condition> conditions) throws NoSuchFieldException, IllegalAccessException {
+    public Boolean passConditions(List<Condition> conditions) throws NoSuchFieldException, IllegalAccessException {
         boolean queried = true;
 
         conditionLoop:

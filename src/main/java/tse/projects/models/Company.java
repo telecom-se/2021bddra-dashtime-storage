@@ -1,6 +1,6 @@
 package tse.projects.models;
 
-public class Company implements DatabaseModel {
+public class Company extends DatabaseModel {
     public String symbol;
     public String name;
     public String description;

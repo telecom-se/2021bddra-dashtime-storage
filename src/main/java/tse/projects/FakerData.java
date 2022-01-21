@@ -1,6 +1,7 @@
 package tse.projects;
 
 import tse.projects.models.Company;
+import tse.projects.models.DatabaseModel;
 import tse.projects.models.Stock;
 
 import java.util.ArrayList;
@@ -28,9 +29,11 @@ public class FakerData {
 
     public static List<Stock> getFakeStocks(String symbol) {
         List<Stock> stocks = new ArrayList<>();
-        for (long i = 1; i <= 50; i++) {
-            Double value = (Math.random() * 100) + Math.random();
-            stocks.add(new Stock(i, symbol, 1642710665L + i, value));
+        double value = (Math.random() * 800) + Math.random() + 200;
+        double fluctuation = value * 0.05;
+        for (long i = 0; i < 1000; i++) {
+            value += (Math.random() * fluctuation) - fluctuation / 2;
+            stocks.add(new Stock(i + 1, symbol, 1640991600L + 3600 * i, value));
         }
         return stocks;
     }

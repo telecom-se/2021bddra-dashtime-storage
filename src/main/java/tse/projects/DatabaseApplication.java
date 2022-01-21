@@ -16,8 +16,11 @@ public class DatabaseApplication extends UnicastRemoteObject implements Database
     public static void main(String[] args) throws Exception {
         DatabaseApplication.queryService = new QueryService();
 
-        // FAKE DATA
-        DatabaseApplication.queryService.generateFakeData();
+        // GENERATE DATA
+        // DatabaseApplication.queryService.generateFakeData();
+        // DatabaseApplication.queryService.saveDatabase();
+        DatabaseApplication.queryService.loadDatabase();
+
 
         System.out.println("AionDB server started");
 

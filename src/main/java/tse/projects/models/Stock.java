@@ -1,6 +1,6 @@
 package tse.projects.models;
 
-public class Stock implements DatabaseModel {
+public class Stock extends DatabaseModel {
     public Long id;
     public String symbol;
     public Long timestamp;
