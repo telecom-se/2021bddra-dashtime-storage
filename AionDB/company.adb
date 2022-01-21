@@ -3,8 +3,8 @@
 {"symbol":"AMZN","name":"amazon","description":"Amazon.com, Inc.","currency":"USD"}
 {"symbol":"DIS","name":"disney","description":"The Walt Disney Company.","currency":"USD"}
 {"symbol":"DELL","name":"dell","description":"Dell Technologies Inc.","currency":"USD"}
-{"symbol":"FB","name":"facebook","description":"Ford Motor Company","currency":"USD"}
-{"symbol":"F","name":"ford","description":"Fortinet, Inc.","currency":"USD"}
+{"symbol":"FB","name":"facebook","description":"Meta Platforms, Inc.","currency":"USD"}
+{"symbol":"F","name":"ford","description":"Ford Motor Company","currency":"USD"}
 {"symbol":"GOOG","name":"google","description":"Alphabet Inc.","currency":"USD"}
 {"symbol":"NFLX","name":"netflix","description":"Netflix, Inc.","currency":"USD"}
 {"symbol":"NIKE","name":"nike","description":"Nike, Inc.","currency":"USD"}
